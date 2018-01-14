@@ -1,6 +1,7 @@
 #!/bin/bash
 
 bashrc=~/.bashrc
+zshrc=~/.zshrc
 apt_conf=/etc/apt/apt.conf
 wgetrc=~/.wgetrc
 renviron=~/.Renviron
@@ -18,6 +19,11 @@ if ! [ -z "$(tail -c 1 $bashrc)" ]; then echo "" >> $bashrc; fi
 if ! grep -q "http_proxy" $bashrc; then echo "export http_proxy=$http_proxy" >> $bashrc; fi
 if ! grep -q "https_proxy" $bashrc; then echo "export https_proxy=$https_proxy" >> $bashrc; fi
 if ! grep -q "ftp_proxy" $bashrc; then echo "export ftp_proxy=$ftp_proxy" >> $bashrc; fi
+
+if ! [ -z "$(tail -c 1 $zshrc)" ]; then echo "" >> $zshrc; fi
+if ! grep -q "http_proxy" $zshrc; then echo "export http_proxy=$http_proxy" >> $zshrc; fi
+if ! grep -q "https_proxy" $zshrc; then echo "export https_proxy=$https_proxy" >> $zshrc; fi
+if ! grep -q "ftp_proxy" $zshrc; then echo "export ftp_proxy=$ftp_proxy" >> $zshrc; fi
 
 git config --global http.proxy $http_proxy
 git config --global https.proxy $https_proxy

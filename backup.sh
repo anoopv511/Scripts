@@ -13,6 +13,7 @@ rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.jupyter $1
 
 # Config Files
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.bashrc $1
+rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.zshrc $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.bash_history $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.Renviron $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.wgetrc $1
