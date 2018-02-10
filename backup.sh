@@ -15,6 +15,7 @@ rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.jupyter $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.bashrc $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.zshrc $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.bash_history $1
+rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.bash_aliases $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.Renviron $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.wgetrc $1
 rsync -r -t -o -v --progress --modify-window=2 -s /home/anoop/.octaverc $1
