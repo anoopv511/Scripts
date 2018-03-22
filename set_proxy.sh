@@ -51,3 +51,13 @@ if ! grep -q "ftpProxy" $kioslaverc; then echo "ftpProxy=$ftp_proxy" >> $kioslav
 find ~/.mozilla/firefox -maxdepth 2 -type f -name prefs.js | while read f; do grep -m1 -q "network.proxy.type.*.0)\;$" "${f}" && { sed "s|network.proxy.type\", 0|network.proxy.type\", 2|g" "${f}" > "${f}.tmp" && mv -f "${f}.tmp" "${f}"; } done;
 
 sed -i -e 's/ProxyType=0/ProxyType=2/g' .config/kioslaverc
+# Restart kioslave
+
+# gsettings set org.gnome.system.proxy.http host http://proxy22.iitd.ac.in
+# gsettings set org.gnome.system.proxy.https host https://proxy22.iitd.ac.in
+# gsettings set org.gnome.system.proxy.ftp host ftp://proxy22.iitd.ac.in
+# gsettings set org.gnome.system.proxy.http port 3128
+# gsettings set org.gnome.system.proxy.https port 3128
+# gsettings set org.gnome.system.proxy.ftp port 3128
+# gsettings set org.gnome.system.proxy use-same-proxy false
+gsettings set org.gnome.system.proxy mode 'manual'

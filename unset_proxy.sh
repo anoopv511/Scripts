@@ -41,3 +41,6 @@ sed -i '/ftpProxy/d' $kioslaverc
 find ~/.mozilla/firefox -maxdepth 2 -type f -name prefs.js | while read f; do grep -m1 -q "network.proxy.type.*.2)\;$" "${f}" && { sed "s|network.proxy.type\", 2|network.proxy.type\", 0|g" "${f}" > "${f}.tmp" && mv -f "${f}.tmp" "${f}"; } done;
 
 sed -i -e 's/ProxyType=2/ProxyType=0/g' .config/kioslaverc
+# Restart kioslave
+
+gsettings set org.gnome.system.proxy mode 'none'
