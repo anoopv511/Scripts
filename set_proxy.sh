@@ -3,6 +3,7 @@
 bashrc=~/.bashrc
 zshrc=~/.zshrc
 apt_conf=/etc/apt/apt.conf
+etc_env=/etc/environment
 wgetrc=~/.wgetrc
 renviron=~/.Renviron
 kioslaverc=~/.kde/share/config/kioslaverc
@@ -15,6 +16,11 @@ if ! [ -z "$(tail -c 1 $apt_conf)" ]; then echo "" | sudo tee -a $apt_conf > /de
 if ! grep -q "Acquire::http::Proxy" $apt_conf; then echo "Acquire::http::Proxy \"$http_proxy\";" | sudo tee -a $apt_conf > /dev/null; fi
 if ! grep -q "Acquire::https::Proxy" $apt_conf; then echo "Acquire::https::Proxy \"$https_proxy\";" | sudo tee -a $apt_conf > /dev/null; fi
 if ! grep -q "Acquire::ftp::Proxy" $apt_conf; then echo "Acquire::ftp::Proxy \"$ftp_proxy\";" | sudo tee -a $apt_conf > /dev/null; fi
+
+if ! [ -z "$(tail -c 1 $etc_env)" ]; then echo "" | sudo tee -a $etc_env > /dev/null; fi
+if ! grep -q "http_proxy" $etc_env; then echo "http_proxy=$http_proxy" | sudo tee -a $etc_env > /dev/null; fi
+if ! grep -q "https_proxy" $etc_env; then echo "https_proxy=$https_proxy" | sudo tee -a $etc_env > /dev/null; fi
+if ! grep -q "ftp_proxy" $etc_env; then echo "ftp_proxy=$ftp_proxy" | sudo tee -a $etc_env > /dev/null; fi
 
 if ! [ -z "$(tail -c 1 $bashrc)" ]; then echo "" >> $bashrc; fi
 if ! grep -q "http_proxy" $bashrc; then echo "export http_proxy=$http_proxy" >> $bashrc; fi
@@ -48,7 +54,7 @@ if ! grep -q "httpProxy" $kioslaverc; then echo "httpProxy=$http_proxy" >> $kios
 if ! grep -q "httpsProxy" $kioslaverc; then echo "httpsProxy=$https_proxy" >> $kioslaverc; fi
 if ! grep -q "ftpProxy" $kioslaverc; then echo "ftpProxy=$ftp_proxy" >> $kioslaverc; fi
 
-find ~/.mozilla/firefox -maxdepth 2 -type f -name prefs.js | while read f; do grep -m1 -q "network.proxy.type.*.0)\;$" "${f}" && { sed "s|network.proxy.type\", 0|network.proxy.type\", 2|g" "${f}" > "${f}.tmp" && mv -f "${f}.tmp" "${f}"; } done;
+# find ~/.mozilla/firefox -maxdepth 2 -type f -name prefs.js | while read f; do grep -m1 -q "network.proxy.type.*.0)\;$" "${f}" && { sed "s|network.proxy.type\", 0|network.proxy.type\", 2|g" "${f}" > "${f}.tmp" && mv -f "${f}.tmp" "${f}"; } done;
 
 sed -i -e 's/ProxyType=0/ProxyType=2/g' .config/kioslaverc
 # Restart kioslave
@@ -61,3 +67,5 @@ sed -i -e 's/ProxyType=0/ProxyType=2/g' .config/kioslaverc
 # gsettings set org.gnome.system.proxy.ftp port 3128
 # gsettings set org.gnome.system.proxy use-same-proxy false
 gsettings set org.gnome.system.proxy mode 'manual'
+
+notify-send -i ~/.local/share/icons/add.png -t 3000 "Proxy" "Activated"
